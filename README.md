@@ -1,1 +1,1 @@
-# OmrRepo
+# InformationTheoryAndDataCompression
