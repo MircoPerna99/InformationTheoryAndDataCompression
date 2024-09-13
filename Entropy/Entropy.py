@@ -27,7 +27,8 @@ class Entropy:
     
     def CalculateEntropyOfAText(self, nameFile):
         dictionary = self.CalculateFrequencyOfCharsOnAText(nameFile)
-        print(dictionary)
+        return self.CalculateEntropy(dictionary.values())
+        
     
 
         
@@ -35,4 +36,4 @@ class Entropy:
 prova = Entropy()
 
 print(prova.CalculateEntropy([1/3,1/3,1/3]))
-prova.CalculateEntropyOfAText("Prova.txt")
+print(prova.CalculateEntropyOfAText("Prova.txt"))
