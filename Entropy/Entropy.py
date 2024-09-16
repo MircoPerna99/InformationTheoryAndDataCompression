@@ -33,7 +33,7 @@ class Entropy:
 
         
 
-prova = Entropy()
+trial = Entropy()
 
-print(prova.CalculateEntropy([1/3,1/3,1/3]))
-print(prova.CalculateEntropyOfAText("Prova.txt"))
+print(trial.CalculateEntropy([1/3,1/3,1/3]))
+print(trial.CalculateEntropyOfAText("Prova.txt"))
