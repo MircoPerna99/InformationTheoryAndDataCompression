@@ -1,10 +1,10 @@
 import math
 
 class Entropy:    
-    def CalculateEntropy(self, probabilities):
+    def CalculateEntropy(self, probabilities, base = 2):
         entropyCalculated = 0
         for probability in  probabilities:
-            entropyCalculated = entropyCalculated + probability*math.log2(1/probability)
+            entropyCalculated = entropyCalculated + probability*math.log(1/probability, base)
     
         return entropyCalculated
     
@@ -28,12 +28,3 @@ class Entropy:
     def CalculateEntropyOfAText(self, nameFile):
         dictionary = self.CalculateFrequencyOfCharsOnAText(nameFile)
         return self.CalculateEntropy(dictionary.values())
-        
-    
-
-        
-
-trial = Entropy()
-
-print(trial.CalculateEntropy([1/3,1/3,1/3]))
-print(trial.CalculateEntropyOfAText("Prova.txt"))

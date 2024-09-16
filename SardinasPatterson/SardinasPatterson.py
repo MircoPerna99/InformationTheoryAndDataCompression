@@ -8,8 +8,6 @@ class StateSardinasPatterson(Enum):
     NOT_UD = 5
     NONE = 6
     
-    
-
 class SardinasPatterson:
     def Intersection(self,lst1, lst2):
         return list(set(lst1) & set(lst2))
@@ -44,7 +42,7 @@ class SardinasPatterson:
         else:
             return StateSardinasPatterson.NONE
             
-    def ApplySardinasPatterson(self, initialSet):
+    def Apply(self, initialSet):
         currentSet = initialSet.copy()
         setOfSets = []
         status = StateSardinasPatterson.NONE
@@ -67,13 +65,13 @@ class SardinasPatterson:
             
         return status
             
-trial = SardinasPatterson()
-listOfStrings = ["a", "c", "ad", "abb", "bad","deb","bbcde"]
-print(trial.ApplySardinasPatterson(listOfStrings).name)
+# trial = SardinasPatterson()
+# listOfStrings = ["a", "c", "ad", "abb", "bad","deb","bbcde"]
+# print(trial.ApplySardinasPatterson(listOfStrings).name)
 
 
-listOfStrings = ["abc", "abcd", "e", "dba", "bace","ceac","ceab", "eabd"]
-print(trial.ApplySardinasPatterson(listOfStrings).name)
+# listOfStrings = ["abc", "abcd", "e", "dba", "bace","ceac","ceab", "eabd"]
+# print(trial.ApplySardinasPatterson(listOfStrings).name)
 
-listOfStrings = ["010", "0001", "0110", "1100", "00011","00110","11110", "101011"]
-print(trial.ApplySardinasPatterson(listOfStrings).name)
+# listOfStrings = ["010", "0001", "0110", "1100", "00011","00110","11110", "101011"]
+# print(trial.ApplySardinasPatterson(listOfStrings).name)
