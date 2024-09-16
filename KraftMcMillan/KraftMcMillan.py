@@ -13,7 +13,7 @@ def CalculateAverageCodeLength(probabilities, length):
     return averageCodeLength
 
 def CalculateCodeEfficiency(probabilities,length, base=2):
-    entropyValue = Entropy().CalculateEntropy(probabilities,d)
+    entropyValue = Entropy().CalculateEntropy(probabilities,base)
     averageCodeLength = CalculateAverageCodeLength(probabilities, length)
     return entropyValue/averageCodeLength
     
