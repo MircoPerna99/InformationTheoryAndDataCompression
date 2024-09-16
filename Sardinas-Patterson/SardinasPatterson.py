@@ -14,19 +14,14 @@ class SardinasPatterson:
         if suffix and not suffix in list:
             list.append(suffix)
         
-
     def FoundTheAnswer(self,initialSet, currentSet, setOfSets):
         if(setOfSets and self.Intersection(initialSet, currentSet)):
             return StateSardinasPatterson.NOT_UD
-        elif(setOfSets and not currentSet):
-            return StateSardinasPatterson.UD
-        elif(setOfSets and currentSet in setOfSets): 
+        elif(setOfSets and (not currentSet or currentSet in setOfSets ) ):
             return StateSardinasPatterson.UD
         else:
             return StateSardinasPatterson.NONE
             
-    
-    
     def ApplySardinasPatterson(self, strings):
         listStep = strings.copy()
         setOfLists = []
@@ -46,6 +41,8 @@ class SardinasPatterson:
             setOfLists.append(listStep)
             print(listStep)
             
+        return status
+            
 trial = SardinasPatterson()
 listOfStrings = ["a", "c", "ad", "abb", "bad","deb","bbcde"]
-trial.ApplySardinasPatterson(listOfStrings)
+print(trial.ApplySardinasPatterson(listOfStrings))
