@@ -20,9 +20,8 @@ class SardinasPatterson:
             return StateSardinasPatterson.NOT_UD
         elif(setOfSets and not currentSet):
             return StateSardinasPatterson.UD
-        #TODO
-        # elif(setOfSets and currentSet in setOfSets): 
-        #     return StateSardinasPatterson.UD
+        elif(setOfSets and currentSet in setOfSets): 
+            return StateSardinasPatterson.UD
         else:
             return StateSardinasPatterson.NONE
             
@@ -30,10 +29,10 @@ class SardinasPatterson:
     
     def ApplySardinasPatterson(self, strings):
         listStep = strings.copy()
-        newList = []
         setOfLists = []
+        status = StateSardinasPatterson.NONE
         print(listStep)
-        while(self.FoundTheAnswer(strings, newList, setOfLists) == StateSardinasPatterson.NONE):
+        while(status == StateSardinasPatterson.NONE):
             newList = []
             for string1 in listStep:
                 for string2 in strings:
@@ -43,6 +42,7 @@ class SardinasPatterson:
                         self.AddSuffixToList(string1, string2, newList)
             
             listStep = newList.copy()
+            status = self.FoundTheAnswer(strings, listStep, setOfLists)
             setOfLists.append(listStep)
             print(listStep)
             
