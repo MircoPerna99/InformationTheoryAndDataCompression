@@ -1,14 +1,6 @@
 import math
 
-class Entropy:    
-    def CalculateEntropy(self, probabilities, base = 2):
-        entropyCalculated = 0
-        for probability in  probabilities:
-            entropyCalculated = entropyCalculated + probability*math.log(1/probability, base)
-    
-        return entropyCalculated
-    
-    def CalculateFrequencyOfCharsOnAText(self, nameFile):
+def CalculateFrequencyOfCharsOnAText(nameFile):
         dictionary = {}
         file = open(nameFile, "r")
         amountOfChars = 0
@@ -24,7 +16,15 @@ class Entropy:
             dictionary[key] = dictionary[key]/amountOfChars
         
         return dictionary
+
+class Entropy:    
+    def CalculateEntropy(self, probabilities, base = 2):
+        entropyCalculated = 0
+        for probability in  probabilities:
+            entropyCalculated = entropyCalculated + probability*math.log(1/probability, base)
+    
+        return entropyCalculated
     
     def CalculateEntropyOfAText(self, nameFile):
-        dictionary = self.CalculateFrequencyOfCharsOnAText(nameFile)
+        dictionary = CalculateFrequencyOfCharsOnAText(nameFile)
         return self.CalculateEntropy(dictionary.values())
