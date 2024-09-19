@@ -13,3 +13,6 @@ class Queue():
  
     def Dequeue(self):
         return self.queue.pop(0)
+    
+    def Top(self):
+        return self.queue[0]

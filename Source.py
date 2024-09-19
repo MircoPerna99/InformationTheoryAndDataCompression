@@ -53,8 +53,9 @@ class Source():
     
     def ApplyHuffman(self):
         huffman = Huffman(self.discreteSource)
-        prova = huffman.initialQueue.Dequeue()
-        print(prova.value)
+        huffman.Apply()
+        # prova = huffman.initialQueue.Dequeue()
+        # print(prova.value)
 
 source1 = Source([], [], pathText="Prova.txt")
 source1.ApplyHuffman()
