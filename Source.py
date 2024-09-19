@@ -5,6 +5,7 @@ from Huffman.Huffman import *
 class Source():
     def __init__(self, probabilities, code, base=2, pathText = ""):
         if pathText :
+            self.pathText = pathText
             self.CreateSourceFromText(pathText)
             self.probabilities = self.discreteSource.values()
         else:
@@ -53,9 +54,17 @@ class Source():
     
     def ApplyHuffman(self):
         huffman = Huffman(self.discreteSource)
-        huffman.Apply()
-        # prova = huffman.initialQueue.Dequeue()
-        # print(prova.value)
+        table = huffman.Apply()
+        
+        file = open(self.pathText, "r")
+        newFile = file.read()
+        
+        for code in table:
+            newFile= newFile.replace(code, table[code])
+            
+        file.close()
+        
+        print(newFile)
 
 source1 = Source([], [], pathText="Prova.txt")
 source1.ApplyHuffman()

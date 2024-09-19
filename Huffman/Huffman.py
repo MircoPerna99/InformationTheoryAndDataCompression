@@ -14,7 +14,6 @@ class Huffman():
         self.queueForResulting = Queue()
         self.initialQueue = Queue()
         
-        print(source)
         for s in source:
             self.initialQueue.Enqueue(Node(ValueSource(s, source[s]), None, None)) 
                 
@@ -61,7 +60,6 @@ class Huffman():
         else:
             self.Encode(node.left, table, code+"0")
             self.Encode(node.right, table, code+"1")
-
      
     def Apply(self):
         
@@ -70,7 +68,9 @@ class Huffman():
         
         self.Encode(root,table, "")
         
-        print(table)
+        return table
+
+            
 
 
 

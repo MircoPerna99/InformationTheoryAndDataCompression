@@ -15,6 +15,8 @@ def CalculateFrequencyOfCharsOnAText(nameFile):
         for key in dictionary:
             dictionary[key] = dictionary[key]/amountOfChars
         
+        file.close()
+        
         return dictionary
 
 class Entropy:    
