@@ -5,9 +5,6 @@ class ArithmeticCode():
             self.source = source
             self.cumulativeProbabilities = {}
             self.CalculateCumulativeProbabilitiesOfTheSource()
-            
-    def Code(self, text):
-        return True
 
     def CalculateCumulativeProbabilities(self, symbol):
             cumulativeProbavilities = 0
@@ -20,9 +17,7 @@ class ArithmeticCode():
     def CalculateCumulativeProbabilitiesOfTheSource(self):
         for key in  self.source:
             self.cumulativeProbabilities[key] = self.CalculateCumulativeProbabilities(key)
-            
-    def Truncate(self, value, amountOfDecimal):
-        return math.floor(value * 10**amountOfDecimal) / 10**amountOfDecimal
+
     
     def EncodeMessage(self, message):
         high = 1
@@ -71,11 +66,12 @@ print("encode message:",prova.EncodeMessage('abac'))
 print(prova.DecodeMessage(prova.EncodeMessage('abac'), 4))
 
 
-# dic1 = {'a': 0.4, 'b':0.5, 'c':0.1}
-# prova1 =  ArithmeticCode(dic1)
+dic1 = {'a': 0.4, 'b':0.5, 'c':0.1}
+prova1 =  ArithmeticCode(dic1)
 
-# print(prova1.cumulativeProbabilities)
-# print(prova1.EncodeMessage('bbbc'))
+print(prova1.cumulativeProbabilities)
+print(prova1.EncodeMessage('bbbc'))
+print(prova1.DecodeMessage(prova1.EncodeMessage('bbbc'), len('bbbc')))
 
 # # dic2 = {'s': 0.5, 'w':0.1, 'i':0.2, 'm':0.1, '_':0.1}
 dic2 = {'A': 0.2, 'B':0.5, 'C':0.3}
