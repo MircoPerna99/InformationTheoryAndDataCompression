@@ -52,10 +52,10 @@ class Source():
         self.CheckCode()
         return KrafMcMillan().Apply(amountOfSymbols, self.lengths)
     
-    def ApplyHuffman(self):
+    def ApplyHuffmanEncode(self):
         huffman = Huffman(self.discreteSource)
-        table = huffman.Apply()
-        
+        table = huffman.ApplyEncode()
+        print(table)
         file = open(self.pathText, "r")
         newFile = file.read()
         
@@ -65,9 +65,18 @@ class Source():
         file.close()
         
         print(newFile)
+        return newFile
+
+    def ApplyHuffmanDecode(self, message):
+        huffman = Huffman(self.discreteSource)
+        return huffman.ApplyDecode(message)
+    
 
 source1 = Source([], [], pathText="Prova.txt")
-source1.ApplyHuffman()
+message = source1.ApplyHuffmanEncode()
+print(message)
+print(source1.ApplyHuffmanDecode(message))
+
 
 
         

@@ -1,5 +1,5 @@
-from Utilies.Queue import Queue
-from Utilies.Node import Node
+from Utilities.Queue import Queue
+from Utilities.Node import Node
 
 class ValueSource():
     def __init__(self, simbol, probability):
@@ -60,8 +60,32 @@ class Huffman():
         else:
             self.Encode(node.left, table, code+"0")
             self.Encode(node.right, table, code+"1")
-     
-    def Apply(self):
+            
+    def IsLeaf(self, node):
+        return not node.left  and not node.right
+    
+    def ChooseNextNode(self, node, value):
+        if(value == '0'):
+            return node.left
+        else:
+            return node.right
+    
+    def Decode(self, message, root):
+        nodeToAnalize = root
+        decodedMessage = ""
+        i = 0
+        while(i < len(message)):
+            if self.IsLeaf(nodeToAnalize):
+                decodedMessage = decodedMessage + nodeToAnalize.value.simbol
+                nodeToAnalize = root
+            else:
+                nodeToAnalize = self.ChooseNextNode(nodeToAnalize, message[i])
+                i+=1
+            
+        return decodedMessage
+            
+            
+    def ApplyEncode(self):
         
         root = self.CreateTree()
         table = {}
@@ -69,6 +93,11 @@ class Huffman():
         self.Encode(root,table, "")
         
         return table
+    
+    def ApplyDecode(self, message):
+        root = self.CreateTree()
+        return self.Decode(message, root)
+    
 
             
 
