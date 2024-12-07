@@ -1,6 +1,7 @@
 from Entropy.Entropy import *
 from KraftMcMillan.KraftMcMillan import *
 from Huffman.Huffman import *
+from SardinasPatterson.SardinasPatterson import * 
 
 class Source():
     def __init__(self, probabilities, code, base=2, pathText = ""):

@@ -9,6 +9,9 @@ class StateSardinasPatterson(Enum):
     NONE = 6
     
 class SardinasPatterson:
+    def __init__(self):
+        pass
+    
     def Intersection(self,lst1, lst2):
         return list(set(lst1) & set(lst2))
     
@@ -64,14 +67,3 @@ class SardinasPatterson:
             print(currentSet)
             
         return status
-            
-# trial = SardinasPatterson()
-# listOfStrings = ["a", "c", "ad", "abb", "bad","deb","bbcde"]
-# print(trial.ApplySardinasPatterson(listOfStrings).name)
-
-
-# listOfStrings = ["abc", "abcd", "e", "dba", "bace","ceac","ceab", "eabd"]
-# print(trial.ApplySardinasPatterson(listOfStrings).name)
-
-# listOfStrings = ["010", "0001", "0110", "1100", "00011","00110","11110", "101011"]
-# print(trial.ApplySardinasPatterson(listOfStrings).name)

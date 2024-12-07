@@ -1,6 +1,6 @@
 class Prefix():
-        def __init__(self, index, length):
-            self.index = index
+        def __init__(self, distance, length):
+            self.distance = distance
             self.length = length
             self.nextChar = ""
             
@@ -14,7 +14,7 @@ class LZ77():
         self.InitBuffers(text)
         self.ExecuteEncode()
         for value in self.encodeText:
-            print(value.index, value.length, value.nextChar)
+            print(value.distance, value.length, value.nextChar)
     
     def InitBuffers(self, text = ""):
         self.searchBuffer = ""
@@ -76,24 +76,47 @@ class LZ77():
     def DefineLongestPrefix(self,oldPrefix, newPrefix):
         if(oldPrefix.length < newPrefix.length):
             return newPrefix
-        else:
+        elif(oldPrefix.length > newPrefix.length):
             return oldPrefix
+        else:
+            return self.DefineNearPrefix(oldPrefix, newPrefix)
    
     def DefineNearPrefix(self,oldPrefix, newPrefix):
-            if(oldPrefix.index < newPrefix.index):
+            if(oldPrefix.distance > newPrefix.distance):
                 return newPrefix
             else:
                 return oldPrefix
     
+    
+    def Decode(self):
+        return self.ExecuteDecode(self.encodeText)
+    
+    def ExecuteDecode(self, encodeText):
+        text = ""
+        for item in encodeText:
+          text =  self.DecodeCodeWord(item, text)
+        return text
         
+    def DecodeCodeWord(self, prefix, text):
+        if(prefix.distance == 0 and prefix.length == 0):
+            text = text + prefix.nextChar
+        else:
+           lenText = len(text)
+           endIndex = lenText - (prefix.distance-prefix.length)
+           startIndex = endIndex - prefix.length            
+           text = text + text[startIndex:endIndex] + prefix.nextChar
+           
+    
+        
+        return text
             
-# print("B")
-# LZ77().Encode("B")
-# print("BABB")
-# LZ77().Encode("BABB")   
-LZ77().Encode("babbababbaabbaabaabaaa")   
-print("babbababbaabbaabaabaa")
-LZ77().Encode("!@#$!@#$!")      
-# print("abaababaabb")
-LZ77().Encode("ABCDEFGABCDEF")   
+coder = LZ77()
+coder.Encode("babbababbaabbaabaabaaa") 
+print(coder.Decode())  
+LZ77().Encode("AAAAAAA")     
+
+
+coder = LZ77()
+coder.Encode("ABCDEABFABCDE") 
+print(coder.Decode())  
         
