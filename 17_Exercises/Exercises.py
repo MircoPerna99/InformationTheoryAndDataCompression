@@ -5,6 +5,7 @@ from Universal_Integer_Code.Gamma import GammaCoder
 from KraftMcMillan.KraftMcMillan import KrafMcMillan
 from BurrowsWheelerTransform.BurrowsWheelerTransform import BWT
 from LZ.LZ77 import LZ77
+from LZ.LZ78 import LZ78Coder
 
 #Determine if the following code {01, 011, 1101, 11011, 11101} is UD
 #We determine if the following code {01, 011, 1101, 11011, 11101} is UD 
@@ -60,3 +61,9 @@ print(BWT().Reverse(value.trasformedText, value.index))
 coder = LZ77()
 coder.Encode("abcdeabcdeabcde") 
 print(coder.Decode()) 
+
+#Compute LZ78 parsing of the string abcdeabcdeabcde
+coderLZ78 = LZ78Coder()
+resultLZ78 = coderLZ78.Encode("abcdeabcdeabcde")
+print(resultLZ78)
+print(LZ78Coder().Decode(resultLZ78))

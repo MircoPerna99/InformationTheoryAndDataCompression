@@ -64,12 +64,3 @@ class LZ78Coder():
             valueToInsert += 1
         
         return output
-            
-              
-            
- 
-
-print(LZ78Coder().Encode('ABAABABAA'))
-value = LZ78Coder().Encode('ccaccbcabcaba')
-print(value)
-print(LZ78Coder().Decode(value))
