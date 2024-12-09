@@ -118,5 +118,15 @@ LZ77().Encode("AAAAAAA")
 
 coder = LZ77()
 coder.Encode("ABCDEABFABCDE") 
+print(coder.Decode()) 
+
+
+coder = LZ77()
+coder.Encode("ABCDEFG") 
 print(coder.Decode())  
+
+
+coder = LZ77()
+coder.Encode("ABABCCDABABCCD") 
+print(coder.Decode())   
         
