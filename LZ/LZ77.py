@@ -79,7 +79,6 @@ class LZ77():
         else:
             return len(self.searchBuffer[indexSearchBuffer+length:]) + length
         
-    
     def DefineLongestPrefix(self,oldPrefix, newPrefix):
         if(oldPrefix.length < newPrefix.length):
             return newPrefix
@@ -93,7 +92,6 @@ class LZ77():
                 return newPrefix
             else:
                 return oldPrefix
-    
     
     def Decode(self):
         return self.ExecuteDecode(self.encodeText)
