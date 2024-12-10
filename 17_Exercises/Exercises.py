@@ -6,21 +6,24 @@ from KraftMcMillan.KraftMcMillan import KrafMcMillan
 from BurrowsWheelerTransform.BurrowsWheelerTransform import BWT
 from LZ.LZ77 import LZ77
 from LZ.LZ78 import LZ78Coder
-
+from LZ.LZW import LZWCoder
 #Determine if the following code {01, 011, 1101, 11011, 11101} is UD
 #We determine if the following code {01, 011, 1101, 11011, 11101} is UD 
 #using the algorithm Sardinas-Patterson algorithm
+print("\nDetermine if the following code {01, 011, 1101, 11011, 11101} is UD")
 trial = SardinasPatterson()
 listOfStrings = ["01", "011", "1101", "11011", "11101"]
 print(trial.Apply(listOfStrings).name)
 
 #Given an input text in which the characters in the alphabet have the following
 #frequencies: A: 10 B: 15 C: 30 D: 20 E: 25, construct the Huffman code.
+print("\nGiven an input text in which the characters in the alphabet have the following\nfrequencies: A: 10 B: 15 C: 30 D: 20 E: 25, construct the Huffman code.")
 source = {"A":10/100, "B": 15/100, "C": 30/100 , "D": 20/100,  "E": 25/100}
 huffmanCoder = Huffman(source)
 print(huffmanCoder.ApplyEncode())
 
 #Given the text abbcccdddd, which is its arithmetic coding?
+print("\nGiven the text abbcccdddd, which is its arithmetic coding?")
 dic = {'a': 1, 'b':1, 'c':1, 'd':1}
 acCoder = DynamicArithmeticCode(dic)
 messageEncoded = acCoder.EncodeMessage('abbcccdddd')
@@ -28,6 +31,7 @@ print(messageEncoded)
 print(acCoder.DecodeMessage(messageEncoded))
 
 #Given a sequence of integers {10, 5, 8, 3, 12}, which is the gamma encoding?
+print("\nGiven a sequence of integers {10, 5, 8, 3, 12}, which is the gamma encoding?")
 sequence = [10,5,8,3,12]
 sequenceEncoded = []
 for item in sequence:
@@ -53,17 +57,42 @@ else:
     print("It is not possible")
     
 #Compute BWT(banana)
+print("\nCompute BWT(banana)")
 value = BWT().Trasform("banana")
 print(value.trasformedText)
 print(BWT().Reverse(value.trasformedText, value.index))
 
 #Compute LZ77 parsing of the string abcdeabcdeabcde
+print("\nCompute LZ77 parsing of the string abcdeabcdeabcde")
 coder = LZ77()
 coder.Encode("abcdeabcdeabcde") 
 print(coder.Decode()) 
 
+#Apply the LZ77 algorithm to the text ‘aababbbabaababbbabbabb’
+print("\nApply the LZ77 algorithm to the text ‘aababbbabaababbbabbabb’")
+coder = LZ77()
+coder.Encode("aababbbabaababbbabbabb") 
+print(coder.Decode()) 
+
 #Compute LZ78 parsing of the string abcdeabcdeabcde
+print("\nCompute LZ78 parsing of the string abcdeabcdeabcde")
 coderLZ78 = LZ78Coder()
 resultLZ78 = coderLZ78.Encode("abcdeabcdeabcde")
 print(resultLZ78)
 print(LZ78Coder().Decode(resultLZ78))
+
+#Apply the LZ78 algorithm to the text ‘barbara–bar’
+print("\nApply the LZ78 algorithm to the text ‘barbara–bar")
+coderLZ78 = LZ78Coder()
+resultLZ78 = coderLZ78.Encode("barbara–bar")
+print(resultLZ78)
+print(LZ78Coder().Decode(resultLZ78))
+
+#Apply the LZW algorithm to the text ‘aababbbabaababbbabbabb’
+print("\nApply the LZW algorithm to the text ‘aababbbabaababbbabbabb’")
+coderLZW = LZWCoder(['a','b'])
+resultLZW = coderLZW.Encode("aababbbabaababbbabbabb")
+print(coderLZW.codebookEncode)
+print(resultLZW)
+print(coderLZW.Decode(resultLZW))
+print(coderLZW.codebookDecode)

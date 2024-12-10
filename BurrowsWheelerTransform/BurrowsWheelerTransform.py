@@ -45,8 +45,8 @@ class BWT():
         
         return sortedText[index]
     
-value = BWT().Trasform("banana")
-print(BWT().Reverse(value.trasformedText, value.index))
+# value = BWT().Trasform("banana")
+# print(BWT().Reverse(value.trasformedText, value.index))
 
-value = BWT().Trasform("abracadabra")
-print(BWT().Reverse(value.trasformedText, value.index))
+# value = BWT().Trasform("abracadabra")
+# print(BWT().Reverse(value.trasformedText, value.index))

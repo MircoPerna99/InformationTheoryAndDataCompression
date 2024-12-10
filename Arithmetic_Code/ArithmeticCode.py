@@ -58,25 +58,25 @@ class ArithmeticCode():
 
 
 
-dic = {'a': 0.5, 'b':0.25, 'c':0.25}
-prova =  ArithmeticCode(dic)
+# dic = {'a': 0.5, 'b':0.25, 'c':0.25}
+# prova =  ArithmeticCode(dic)
 
-print(prova.cumulativeProbabilities)
-print("encode message:",prova.EncodeMessage('abac'))
-print(prova.DecodeMessage(prova.EncodeMessage('abac'), 4))
+# print(prova.cumulativeProbabilities)
+# print("encode message:",prova.EncodeMessage('abac'))
+# print(prova.DecodeMessage(prova.EncodeMessage('abac'), 4))
 
 
-dic1 = {'a': 0.4, 'b':0.5, 'c':0.1}
-prova1 =  ArithmeticCode(dic1)
+# dic1 = {'a': 0.4, 'b':0.5, 'c':0.1}
+# prova1 =  ArithmeticCode(dic1)
 
-print(prova1.cumulativeProbabilities)
-print(prova1.EncodeMessage('bbbc'))
-print(prova1.DecodeMessage(prova1.EncodeMessage('bbbc'), len('bbbc')))
+# print(prova1.cumulativeProbabilities)
+# print(prova1.EncodeMessage('bbbc'))
+# print(prova1.DecodeMessage(prova1.EncodeMessage('bbbc'), len('bbbc')))
 
-# # dic2 = {'s': 0.5, 'w':0.1, 'i':0.2, 'm':0.1, '_':0.1}
-dic2 = {'A': 0.2, 'B':0.5, 'C':0.3}
-prova2 =  ArithmeticCode(dic2)
+# # # dic2 = {'s': 0.5, 'w':0.1, 'i':0.2, 'm':0.1, '_':0.1}
+# dic2 = {'A': 0.2, 'B':0.5, 'C':0.3}
+# prova2 =  ArithmeticCode(dic2)
 
-print(prova2.cumulativeProbabilities)
-print(prova2.EncodeMessage('AABBAACCCBB'))
-print(prova2.DecodeMessage(prova2.EncodeMessage('AABBAACCCBB'), len('AABBAACCCBB')))
+# print(prova2.cumulativeProbabilities)
+# print(prova2.EncodeMessage('AABBAACCCBB'))
+# print(prova2.DecodeMessage(prova2.EncodeMessage('AABBAACCCBB'), len('AABBAACCCBB')))

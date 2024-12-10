@@ -66,6 +66,7 @@ class LZWCoder():
             if(not codeToAnalize in self.codebookDecode):
                 self.AddCodewordNotExisting(index,listToDecode,keyToAdd)
 
+            
             output = output + self.codebookDecode[codeToAnalize] 
              
             if(valueToAdd != ""):
@@ -78,24 +79,26 @@ class LZWCoder():
         return output
     
     def AddCodewordNotExisting(self, index, listItem, keyToAdd):
-            previousCodeword = self.codebookDecode[int(listItem[index])-1]
+            previousCodeword = self.codebookDecode[int(listItem[index-1])]
             self.codebookDecode[keyToAdd]= previousCodeword + previousCodeword[0]
 
     
     
 
-coder = LZWCoder(['a','b','c']) 
-value = coder.Encode('bcababbc')  
-print(value)
-print(coder.Decode(value))
+# coder = LZWCoder(['a','b','c']) 
+# value = coder.Encode('bcababbc')  
+# print(value)
+# print(coder.Decode(value))
 
-coder = LZWCoder(['A']) 
-value = coder.Encode('AAAAAA')  
-print(value)
-print(coder.Decode(value))
+# coder = LZWCoder(['A']) 
+# value = coder.Encode('AAAAAA')  
+# print(value)
+# print(coder.Decode(value))
         
     
-coder = LZWCoder(['T','O','B','E','R', 'N']) 
-value = coder.Encode('TOBEORNOTTOBEORTOBEORNOT')  
+coder = LZWCoder(['N', 'e', 'l', ' ', 'm', 'z', 'o', 'd', 'c', 'a', 'i', 'n', 's', 't', 'r', 'v', 
+ 'p', 'u', ',', 'h', 'é', '.', 'A', 'q', 'è', 'g', 'f']
+) 
+value = coder.Encode('Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita. Ahi quanto a dir qual era è cosa dura esta selva selvaggia e aspra e forte.')  
 print(value)
 print(coder.Decode(value))
