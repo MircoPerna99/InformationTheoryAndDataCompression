@@ -4,13 +4,14 @@ class Prefix():
             self.length = length
             self.nextChar = ""
             
-
 class LZ77():
     def __init__(self):
             self.InitBuffers()
             self.encodeText = []
+            self.lengthWindow = 5
     
-    def Encode(self, text):
+    def Encode(self, text, lengthWindow = 5):
+        self.lengthWindow = lengthWindow
         self.InitBuffers(text)
         self.ExecuteEncode()
         for value in self.encodeText:
@@ -31,8 +32,14 @@ class LZ77():
         print(self.searchBuffer, "|", self.lookAheadBuffer)
             
     def UpdateBuffers(self, length):
-        self.searchBuffer =  self.searchBuffer + self.lookAheadBuffer[0:length+1]     
-        self.lookAheadBuffer =  self.lookAheadBuffer[length+1:]            
+        self.UpdateSearchBuffer(length)       
+        self.lookAheadBuffer =  self.lookAheadBuffer[length+1:]     
+        
+    def UpdateSearchBuffer(self, length):   
+            self.searchBuffer =  self.searchBuffer + self.lookAheadBuffer[0:length+1]
+            lenSearchBuffer = len(self.searchBuffer)
+            if( lenSearchBuffer > self.lengthWindow):
+                self.searchBuffer =   self.searchBuffer[(lenSearchBuffer-self.lengthWindow):lenSearchBuffer]
             
     def CalculateChar(self,prefix):
         if(prefix.length == 0):
@@ -105,28 +112,26 @@ class LZ77():
            endIndex = lenText - (prefix.distance-prefix.length)
            startIndex = endIndex - prefix.length            
            text = text + text[startIndex:endIndex] + prefix.nextChar
-           
-    
-        
+
         return text
             
-coder = LZ77()
-coder.Encode("babbababbaabbaabaabaaa") 
-print(coder.Decode())  
-LZ77().Encode("AAAAAAA")     
+# coder = LZ77()
+# coder.Encode("babbababbaabbaabaabaaa") 
+# print(coder.Decode())  
+# LZ77().Encode("AAAAAAA")     
 
 
-coder = LZ77()
-coder.Encode("ABCDEABFABCDE") 
-print(coder.Decode()) 
+# coder = LZ77()
+# coder.Encode("ABCDEABFABCDE") 
+# print(coder.Decode()) 
 
 
-coder = LZ77()
-coder.Encode("ABCDEFG") 
-print(coder.Decode())  
+# coder = LZ77()
+# coder.Encode("ABCDEFG") 
+# print(coder.Decode())  
 
 
-coder = LZ77()
-coder.Encode("ABABCCDABABCCD") 
-print(coder.Decode())   
+# coder = LZ77()
+# coder.Encode("ABABCCDABABCCD") 
+# print(coder.Decode())   
         
