@@ -34,7 +34,6 @@ class BWT():
         for i in range(len(text)):
             list[i] = text[i]+list[i]
     
-    #TODO: Not works for abracadabra
     def Reverse(self,  text, index):
         sortedText = list(text)
         sortedText.sort()
@@ -48,5 +47,5 @@ class BWT():
 # value = BWT().Trasform("banana")
 # print(BWT().Reverse(value.trasformedText, value.index))
 
-# value = BWT().Trasform("abracadabra")
-# print(BWT().Reverse(value.trasformedText, value.index))
+value = BWT().Trasform("abracadabra")
+print(BWT().Reverse(value.trasformedText, value.index))
