@@ -34,7 +34,17 @@ class SuffixArray():
                 self.suffixArrayTypes.insert(0, "S") 
             else:
                 self.suffixArrayTypes.insert(0, nextSuffix)
+                
+    def GetLMSFactors(self):
+        indices = [i for i, x in enumerate(self.suffixArrayTypes) if x == "S*"]
+        print(indices)
+            
     
     
 text = 'banana'
 SuffixArray(text).PrintSuffixArray()
+
+text = 'cbbcacbbcadacbadacb'
+SuffixArray(text).GetLMSFactors()
+
+
