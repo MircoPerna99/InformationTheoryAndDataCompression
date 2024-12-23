@@ -1,12 +1,8 @@
 class SuffixArray(): 
     def SA_IS(self, text):     
         self.InitTextToUser(text)
-        self.textLength = self.GetTextLength()
-        self.suffixArrayType = [False]* self.textLength
+        self.SetTextLength()
         self.SetSuffixArrayType()
-        
-        self.lmsPositions = []
-        self.isLms = [False]*self.textLength
         self.SetLMSPositions()
         saLms = self.InduceSort(self.lmsPositions)
         shortedString = self.GetShortenedString(saLms)
@@ -31,10 +27,11 @@ class SuffixArray():
         
         self.textToUse = text
     
-    def GetTextLength(self):
-        return len(self.textToUse)
+    def SetTextLength(self):
+        self.textLength =  len(self.textToUse)
         
     def SetSuffixArrayType(self):
+        self.suffixArrayType = [False]* self.textLength
         self.suffixArrayType[self.textLength-1] = True
         for i in range(self.textLength-2, -1, -1):
             self.suffixArrayType[i] = self.DefineType(i)
@@ -47,6 +44,8 @@ class SuffixArray():
     
     
     def SetLMSPositions(self):
+        self.lmsPositions = []
+        self.isLms = [False]*self.textLength
         for i in range(1, len(self.textToUse)):
             if( not self.suffixArrayType[i-1] and  self.suffixArrayType[i]):
                 self.lmsPositions.append(i)
@@ -125,8 +124,7 @@ class SuffixArray():
                             newName += 1
                     lmsNames[i] = newName - 1
                     prevLms = i
-        
-        
+              
         return ''.join(self.FromIntToCharShortenedString(name) for name in lmsNames if name != -1)
     
     def FromIntToCharShortenedString(self,  value):
