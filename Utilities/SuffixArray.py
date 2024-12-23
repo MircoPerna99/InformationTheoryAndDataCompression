@@ -133,17 +133,17 @@ class SuffixArray():
         else:
            return chr(value + 96)
 
-text = 'banaananaanana'
-print(SuffixArray().SA_IS(text))
+# text = 'banaananaanana'
+# print(SuffixArray().SA_IS(text))
 
-text = 'aaaa'
-print(SuffixArray().SA_IS(text))
+# text = 'aaaa'
+# print(SuffixArray().SA_IS(text))
 
-text = 'banana'
-print(SuffixArray().SA_IS(text))
+# text = 'banana'
+# print(SuffixArray().SA_IS(text))
 
-text = 'abcab'
-print(SuffixArray().SA_IS(text))
+# text = 'abcab'
+# print(SuffixArray().SA_IS(text))
 
-text = 'mississippi'
-print(SuffixArray().SA_IS(text))
+# text = 'mississippi'
+# print(SuffixArray().SA_IS(text))

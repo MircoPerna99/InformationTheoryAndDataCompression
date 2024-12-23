@@ -1,3 +1,5 @@
+from Utilities.SuffixArray import SuffixArray
+
 class   BWTResult():
     def __init__(self, trasformedText, index):
         self.trasformedText = trasformedText
@@ -29,7 +31,38 @@ class BWT():
                                 
         return  BWTResult(self.TakeTrasformedText(listOfTexts), listOfTexts.index(text))
     
+        
+    def TrasformWithSA(self, text):
     
+        if(text[-1] != '$'):
+            text += '$'
+    
+        suffixArray = SuffixArray().SA_IS(text)
+        bwt = self.GetTrasformedText(suffixArray, text)
+        index = self.GetIndexOriginalText(suffixArray)
+        return  BWTResult(bwt, index)
+
+    def GetTrasformedText(self, suffixArray, text):
+        output = ""
+        
+        for i in range(len(text)):
+            charToAdd = ""
+            if(suffixArray[i] == 0):
+                charToAdd = '$'
+            else:
+                charToAdd = text[suffixArray[i]-1]
+            
+            output =output + charToAdd 
+        
+        return output
+    
+    def GetIndexOriginalText(self, suffixArray):
+        for i in range(suffixArray):
+            if(suffixArray[i] == 0):
+                return 0
+        
+        return -1
+        
     def ComposeRotation(self, text, list):
         for i in range(len(text)):
             list[i] = text[i]+list[i]
@@ -44,8 +77,3 @@ class BWT():
         
         return sortedText[index]
     
-# value = BWT().Trasform("banana")
-# print(BWT().Reverse(value.trasformedText, value.index))
-
-value = BWT().Trasform("abracadabra")
-print(BWT().Reverse(value.trasformedText, value.index))
