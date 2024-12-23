@@ -81,9 +81,7 @@ class CanonicalHuffmanCoder():
             while(int(v,2) < self.firstcode[l]):
                 v = v+textEncode[0:1]
                 textEncode = textEncode[1:]
-                l+=1
-                # print(int(v,2))
-            
+                l+=1            
             vInt = int(v,2)
 
             textDecode += self.symb[l][vInt - self.firstcode[l]]
