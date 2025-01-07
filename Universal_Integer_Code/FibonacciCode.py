@@ -1,59 +1,57 @@
-
-
 class FibonacciCode():
     def __init__(self):
         self.tracker = {2:1, 3:2}
     
-    def Encode(self, value):
-        fibonacciValue = self.CalculateFibonacci(value)
-        valueToReturn = ''
-        while(fibonacciValue>1):
-            if((valueToReturn == '' or valueToReturn[0] == '0') and self.tracker[fibonacciValue]<= value):
-                    value -= self.tracker[fibonacciValue]
-                    valueToReturn = '1'+valueToReturn
+    def encode(self, value):
+        fibonacci_value = self.calculate_fibonacci(value)
+        value_encoded = ''
+        while(fibonacci_value>1):
+            if((value_encoded == '' or value_encoded[0] == '0') and self.tracker[fibonacci_value]<= value):
+                    value -= self.tracker[fibonacci_value]
+                    value_encoded = '1'+value_encoded
             else:
-                    valueToReturn = '0'+valueToReturn
+                    value_encoded = '0'+value_encoded
             
-            fibonacciValue -=1 
+            fibonacci_value -=1 
                     
              
-        return valueToReturn+'1'
+        return value_encoded+'1'
     
-    def CalculateFibonacci(self, value):
-        fibonacciValue = self.tracker[2]
+    def calculate_fibonacci(self, value):
+        fibonacci_value = self.tracker[2]
         i = 2
         while(self.tracker[i] < value):
             i+=1
             if(not i in self.tracker):
-                fibonacciValue = self.GetFibonacciVelue(i-1)+ self.GetFibonacciVelue(i-2)
-                self.tracker[i] = fibonacciValue
+                fibonacci_value = self.get_fibonacci_value(i-1)+ self.get_fibonacci_value(i-2)
+                self.tracker[i] = fibonacci_value
 
         if(self.tracker[i] > value):
             i -=1
         
         return i
     
-    def GetFibonacciVelue(self, value):
+    def get_fibonacci_value(self, value):
         if(not value in self.tracker):
-            self.tracker[value] = self.GetFibonacciVelue(value-1) + self.GetFibonacciVelue(value-2)
+            self.tracker[value] = self.get_fibonacci_value(value-1) + self.get_fibonacci_value(value-2)
                 
         return self.tracker[value]
              
     
-    def Decode(self, value):
-        endPoint = len(value)-1
+    def decode(self, value):
+        end_point = len(value)-1
         i = 0
-        valueToReturn = 0
-        while(i< endPoint):
-            valueToReturn = int(value[i])*self.GetFibonacciVelue(i+2)+valueToReturn
+        value_to_return = 0
+        while(i< end_point):
+            value_to_return = int(value[i])*self.get_fibonacci_value(i+2)+value_to_return
             i += 1
-        return valueToReturn
+        return value_to_return
 
 encoder = FibonacciCode()
 for i in range(1,10):
     print(i)
-    valueEncod = encoder.Encode(i)
-    print(valueEncod)
-    print(encoder.Decode(valueEncod))
+    value_encode = encoder.encode(i)
+    print(value_encode)
+    print(encoder.decode(value_encode))
 
     

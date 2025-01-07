@@ -1,96 +1,96 @@
 class SuffixArray(): 
     def SA_IS(self, text):     
-        self.InitTextToUser(text)
-        self.SetTextLength()
-        self.SetSuffixArrayType()
-        self.SetLMSPositions()
-        saLms = self.InduceSort(self.lmsPositions)
-        shortedString = self.GetShortenedString(saLms)
-        lmsOrdered = self.GetOrderedLMS(shortedString, saLms)
-        return self.InduceSort(lmsOrdered)   
+        self.init_text_to_use(text)
+        self.set_text_length()
+        self.set_suffix_array_type()
+        self.set_LMS_positions()
+        saLms = self.induce_sort(self.lms_positions)
+        shorted_string = self.get_shortened_string(saLms)
+        lms_ordered = self.get_ordered_LMS(shorted_string, saLms)
+        return self.induce_sort(lms_ordered)   
         
-    def GetOrderedLMS(self, shortedString, saLMS):
-        lmsOrdered = []
-        if(len(set(shortedString)) < len(shortedString)):
-            ssSa = SuffixArray().SA_IS(shortedString)
-            lmsOrdered = [self.lmsPositions[i] for i in ssSa]
+    def get_ordered_LMS(self, shorted_string, saLMS):
+        lms_ordered = []
+        if(len(set(shorted_string)) < len(shorted_string)):
+            ssSa = SuffixArray().SA_IS(shorted_string)
+            lms_ordered = [self.lms_positions[i] for i in ssSa]
         else:
             for i in saLMS:
                 if(self.isLms[i]):
-                    lmsOrdered.append(i)
+                    lms_ordered.append(i)
                     
-        return lmsOrdered
+        return lms_ordered
     
-    def InitTextToUser(self, text):
+    def init_text_to_use(self, text):
         if(text[-1] != '$'):
             text += '$'
         
-        self.textToUse = text
+        self.text_to_use = text
     
-    def SetTextLength(self):
-        self.textLength =  len(self.textToUse)
+    def set_text_length(self):
+        self.text_length =  len(self.text_to_use)
         
-    def SetSuffixArrayType(self):
-        self.suffixArrayType = [False]* self.textLength
-        self.suffixArrayType[self.textLength-1] = True
-        for i in range(self.textLength-2, -1, -1):
-            self.suffixArrayType[i] = self.DefineType(i)
+    def set_suffix_array_type(self):
+        self.suffix_array_type = [False]* self.text_length
+        self.suffix_array_type[self.text_length-1] = True
+        for i in range(self.text_length-2, -1, -1):
+            self.suffix_array_type[i] = self.define_type(i)
          
-    def DefineType(self, index):
-        if(self.textToUse[index] == self.textToUse[index+1]):
-            return  self.suffixArrayType[index+1]
+    def define_type(self, index):
+        if(self.text_to_use[index] == self.text_to_use[index+1]):
+            return  self.suffix_array_type[index+1]
         else:
-            return self.textToUse[index] < self.textToUse[index+1]
+            return self.text_to_use[index] < self.text_to_use[index+1]
     
     
-    def SetLMSPositions(self):
-        self.lmsPositions = []
-        self.isLms = [False]*self.textLength
-        for i in range(1, len(self.textToUse)):
-            if( not self.suffixArrayType[i-1] and  self.suffixArrayType[i]):
-                self.lmsPositions.append(i)
+    def set_LMS_positions(self):
+        self.lms_positions = []
+        self.isLms = [False]*self.text_length
+        for i in range(1, len(self.text_to_use)):
+            if( not self.suffix_array_type[i-1] and  self.suffix_array_type[i]):
+                self.lms_positions.append(i)
                 self.isLms[i] = True
            
-    def InduceSort(self, lmsPositions): 
-        sizeText = len(self.textToUse)  
-        sa = [-1] * sizeText
-        buckets = self.GetBucketSizes()
+    def induce_sort(self, lms_positions): 
+        size_text = len(self.text_to_use)  
+        sa = [-1] * size_text
+        buckets = self.get_bucket_sizes()
         
-        tails = self.GetBucketTails(buckets)
-        for pos in reversed(lmsPositions):
-            bucket = self.textToUse[pos]
+        tails = self.get_bucket_tails(buckets)
+        for pos in reversed(lms_positions):
+            bucket = self.text_to_use[pos]
             tails[bucket] -= 1
             sa[tails[bucket]] = pos
         
-        heads = self.GetBucketHeads(buckets)
-        for i in range(sizeText):
+        heads = self.get_bucket_heads(buckets)
+        for i in range(size_text):
             pos = sa[i]
-            if pos > 0 and not self.suffixArrayType[pos - 1]:
-                bucket = self.textToUse[pos - 1]
+            if pos > 0 and not self.suffix_array_type[pos - 1]:
+                bucket = self.text_to_use[pos - 1]
                 if(heads[bucket] < len(sa)):
                     sa[heads[bucket]] = pos - 1
                     heads[bucket] += 1
         
         
         # Induce S-type suffixes
-        tails = self.GetBucketTails(buckets)
-        for i in range(sizeText - 1, -1, -1):
+        tails = self.get_bucket_tails(buckets)
+        for i in range(size_text - 1, -1, -1):
             pos = sa[i]
-            if pos > 0 and self.suffixArrayType[pos - 1]:
-                bucket = self.textToUse[pos - 1]
+            if pos > 0 and self.suffix_array_type[pos - 1]:
+                bucket = self.text_to_use[pos - 1]
                 tails[bucket] -= 1
                 sa[tails[bucket]] = pos - 1
         return sa  
                 
-    def GetBucketSizes(self):
-        alphabetOccurences = [0] * 255
-        for c in self.textToUse: 
-            alphabetOccurences[ord(c)] += 1
+    def get_bucket_sizes(self):
+        alphabet_occurences = [0] * 255
+        for c in self.text_to_use: 
+            alphabet_occurences[ord(c)] += 1
         
-        buckets = {chr(i): val for i, val in enumerate(alphabetOccurences) if val != 0}
+        buckets = {chr(i): val for i, val in enumerate(alphabet_occurences) if val != 0}
         return buckets
 
-    def GetBucketHeads(self, buckets):
+    def get_bucket_heads(self, buckets):
         heads = {}
         sum = 0
         for key in buckets.keys():
@@ -98,7 +98,7 @@ class SuffixArray():
             sum += buckets[key]
         return heads
 
-    def GetBucketTails(self, buckets):
+    def get_bucket_tails(self, buckets):
         tails = {}
         sum = 0
         for key in buckets.keys():
@@ -106,28 +106,28 @@ class SuffixArray():
             tails[key] = sum
         return tails
     
-    def GetShortenedString(self, saLms):
-        prevLms = -1
-        lmsNames = [-1] * self.textLength
-        newName = 0
+    def get_shortened_string(self, saLms):
+        prev_LMS = -1
+        LMS_names = [-1] * self.text_length
+        new_name = 0
         for i in saLms:
                 if  self.isLms[i]:
-                    if prevLms == -1:
-                        newName += 1
+                    if prev_LMS == -1:
+                        new_name += 1
                     else:
-                        j = prevLms
+                        j = prev_LMS
                         k = i
-                        while j < self.textLength and k < self.textLength and self.textToUse[j] == self.textToUse[k] and self.isLms[j] ==  self.isLms[k]:
+                        while j < self.text_length and k < self.text_length and self.text_to_use[j] == self.text_to_use[k] and self.isLms[j] ==  self.isLms[k]:
                             j += 1
                             k += 1
-                        if j == self.textLength or k == self.textLength or self.textToUse[j] != self.textToUse[k]:
-                            newName += 1
-                    lmsNames[i] = newName - 1
-                    prevLms = i
+                        if j == self.text_length or k == self.text_length or self.text_to_use[j] != self.text_to_use[k]:
+                            new_name += 1
+                    LMS_names[i] = new_name - 1
+                    prev_LMS = i
               
-        return ''.join(self.FromIntToCharShortenedString(name) for name in lmsNames if name != -1)
+        return ''.join(self.from_int_to_char_shortened_string(name) for name in LMS_names if name != -1)
     
-    def FromIntToCharShortenedString(self,  value):
+    def from_int_to_char_shortened_string(self,  value):
         if(value == 0):
             return '$'
         else:

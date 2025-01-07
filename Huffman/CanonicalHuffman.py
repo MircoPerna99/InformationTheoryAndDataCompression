@@ -8,92 +8,91 @@ class CanonicalHuffmanCoder():
         self.table = {}
         self.codebook = {}
         
-    def Apply(self, source):
-        huffmanTable = Huffman(source).ApplyEncode()
-        print(huffmanTable)
-        self.TakeSizeArray(huffmanTable)
-        self.SetArrays(huffmanTable)
-        self.SetFcArray()
-        print(self.num)
-        print(self.symb)
-        print(self.firstcode)
-        self.CreateCodebook()
+    def apply(self, source):
+        huffman_table = Huffman(source).apply_encode()
+        # print(huffmanTable)
+        self.take_size_array(huffman_table)
+        self.set_arrays(huffman_table)
+        self.set_FC_array()
+        # print(self.num)
+        # print(self.symb)
+        # print(self.firstcode)
+        self.create_codebook()
         print(self.codebook)
                        
-    def TakeSizeArray(self, huffmanTable):
-        self.sizeArray = 0
-        for value in huffmanTable.values():
-            lenValue = len(value)
-            if(self.sizeArray < lenValue):
-                self.sizeArray = lenValue
+    def take_size_array(self, huffman_table):
+        self.size_array = 0
+        for value in huffman_table.values():
+            len_value = len(value)
+            if(self.size_array < len_value):
+                self.size_array = len_value
         
-    def InitArrays(self):
-        self.num = [0]*(self.sizeArray+1)
-        self.symb = [[] for i in range(self.sizeArray+1)]
-        self.firstcode = [0]*(self.sizeArray+1)
+    def init_arrays(self):
+        self.num = [0]*(self.size_array+1)
+        self.symb = [[] for i in range(self.size_array+1)]
+        self.firstcode = [0]*(self.size_array+1)
         
-    def SetArrays(self, huffmanTable):
-        self.InitArrays()
-        lastLen = 0
-        keys = list(huffmanTable.keys())
+    def set_arrays(self, huffman_table):
+        self.init_arrays()
+        keys = list(huffman_table.keys())
         keys.sort()
         for key in keys:
-                codeword = huffmanTable[key]
-                lenCodeword = len(codeword)
-                self.num[lenCodeword] +=1
-                self.symb[lenCodeword].append(key)
+                codeword = huffman_table[key]
+                len_codeword = len(codeword)
+                self.num[len_codeword] +=1
+                self.symb[len_codeword].append(key)
               
-    def SetFcArray(self):
-        self.firstcode[self.sizeArray]  = 0   
-        for i in  range(self.sizeArray-1, 0, -1):
+    def set_FC_array(self):
+        self.firstcode[self.size_array]  = 0   
+        for i in  range(self.size_array-1, 0, -1):
              self.firstcode[i] = int((self.firstcode[i+1] +self.num[i+1])/2)
         self.firstcode[1]=2 
     
-    def CreateCodebook(self):
-        for iteratorList in range(len(self.symb)):
-            list = self.symb[iteratorList]
+    def create_codebook(self):
+        for iterator_list in range(len(self.symb)):
+            list = self.symb[iterator_list]
             if(list):
-                valueToAdd = 0
+                value_to_add = 0
                 for key in list:
-                    self.codebook[key] =self.DefineCodeWord(iteratorList, valueToAdd)
-                    valueToAdd +=1
+                    self.codebook[key] =self.define_code_word(iterator_list, value_to_add)
+                    value_to_add +=1
     
-    def DefineCodeWord(self, index, valueToAdd):
-        value = str(bin(self.firstcode[index]+valueToAdd))[2:]
-        lenValue = len(value)
-        if(lenValue< index):
-            value = '0'*(index-lenValue)+value
+    def define_code_word(self, index, value_to_add):
+        value = str(bin(self.firstcode[index]+value_to_add))[2:]
+        len_value = len(value)
+        if(len_value< index):
+            value = '0'*(index-len_value)+value
         
         return value
     
-    def Encode(self, text):
+    def encode(self, text):
         output  = ""
         for char in text:
             output += self.codebook[char]
         return output
     
-    def Decode(self, textEncode):
-        textDecode = ""
-        while(textEncode != ""):
+    def decode(self, text_encode):
+        text_decode = ""
+        while(text_encode != ""):
             l = 1
-            v = textEncode[0:1]
-            textEncode = textEncode[1:]
+            v = text_encode[0:1]
+            text_encode = text_encode[1:]
             while(int(v,2) < self.firstcode[l]):
-                v = v+textEncode[0:1]
-                textEncode = textEncode[1:]
+                v = v+text_encode[0:1]
+                text_encode = text_encode[1:]
                 l+=1            
             vInt = int(v,2)
 
-            textDecode += self.symb[l][vInt - self.firstcode[l]]
+            text_decode += self.symb[l][vInt - self.firstcode[l]]
             
-        return textDecode
+        return text_decode
         
         
     
 source = {"A":10/100, "B": 15/100, "C": 30/100 , "D": 20/100,  "E": 25/100}
 
 x = CanonicalHuffmanCoder()
-x.Apply(source)
-value = x.Encode('ABBCDE')
+x.apply(source)
+value = x.encode('ABBCDE')
 print(value)
-print(x.Decode(value))
+print(x.decode(value))

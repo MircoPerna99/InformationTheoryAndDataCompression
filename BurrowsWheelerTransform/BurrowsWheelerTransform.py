@@ -1,79 +1,79 @@
 from Utilities.SuffixArray import SuffixArray
 
 class   BWTResult():
-    def __init__(self, trasformedText, index):
-        self.trasformedText = trasformedText
+    def __init__(self, trasformed_text, index):
+        self.trasformed_text = trasformed_text
         self.index = index
 
 class BWT():
-    def Rotate(self, text):
+    def rotate(self, text):
         return text[-1]+text[:-1]
     
-    def SortText(self, text):
+    def sort_text(self, text):
         return ''.join(sorted(text))
     
-    def TakeTrasformedText(self, list):
-         valueToReturn = ""
+    def take_trasformed_text(self, list):
+         value_to_return = ""
          
          for item in list:
-             valueToReturn = valueToReturn + item[-1]
+             value_to_return = value_to_return + item[-1]
              
-         return valueToReturn
+         return value_to_return
     
-    def Trasform(self, text):
-        sizeText = len(text)
-        listOfTexts = [text]
+    def trasform(self, text):
+        size_text = len(text)
+        list_of_texts = [text]
         
-        for i in range(1, sizeText):
-            listOfTexts.append(self.Rotate(listOfTexts[-1]))
+        for i in range(1, size_text):
+            list_of_texts.append(self.rotate(list_of_texts[-1]))
         
-        listOfTexts.sort()
+        list_of_texts.sort()
                                 
-        return  BWTResult(self.TakeTrasformedText(listOfTexts), listOfTexts.index(text))
+        return  BWTResult(self.take_trasformed_text(list_of_texts), list_of_texts.index(text))
     
         
-    def TrasformWithSA(self, text):
+    def trasform_with_SA(self, text):
     
         if(text[-1] != '$'):
             text += '$'
     
-        suffixArray = SuffixArray().SA_IS(text)
-        bwt = self.GetTrasformedText(suffixArray, text)
-        index = self.GetIndexOriginalText(suffixArray)
+        suffix_array = SuffixArray().SA_IS(text)
+        bwt = self.get_trasformed_text(suffix_array, text)
+        index = self.get_index_original_text(suffix_array)
         return  BWTResult(bwt, index)
 
-    def GetTrasformedText(self, suffixArray, text):
+    def get_trasformed_text(self, suffix_array, text):
         output = ""
         
         for i in range(len(text)):
-            charToAdd = ""
-            if(suffixArray[i] == 0):
-                charToAdd = '$'
+            char_to_add = ""
+            if(suffix_array[i] == 0):
+                char_to_add = '$'
             else:
-                charToAdd = text[suffixArray[i]-1]
+                char_to_add = text[suffix_array[i]-1]
             
-            output =output + charToAdd 
+            output =output + char_to_add 
         
         return output
     
-    def GetIndexOriginalText(self, suffixArray):
-        for i in range(suffixArray):
-            if(suffixArray[i] == 0):
+    def get_index_original_text(self, suffix_array):
+        for i in range(suffix_array):
+            if(suffix_array[i] == 0):
                 return 0
         
         return -1
         
-    def ComposeRotation(self, text, list):
+    def compose_rotation(self, text, list):
         for i in range(len(text)):
             list[i] = text[i]+list[i]
     
-    def Reverse(self,  text, index):
-        sortedText = list(text)
-        sortedText.sort()
+    def reverse(self,  text, index):
+        sorted_text = list(text)
+        sorted_text.sort()
         
         for i in range(len(text)-1):
-            self.ComposeRotation(text, sortedText)
-            sortedText.sort()
+            self.compose_rotation(text, sorted_text)
+            sorted_text.sort()
         
-        return sortedText[index]
+        return sorted_text[index]
     

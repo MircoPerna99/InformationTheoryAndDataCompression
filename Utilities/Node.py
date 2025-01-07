@@ -4,5 +4,5 @@ class Node():
         self.left = left
         self.right = right
 
-    def IsLeaf(self):
+    def is_leaf(self):
         return not self.left and not self.right

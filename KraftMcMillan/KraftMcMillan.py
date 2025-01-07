@@ -1,23 +1,23 @@
 from Entropy.Entropy import Entropy
 
 class KrafMcMillan():
-    def Apply(self, amountOfSymbols, codewordsLength):
-        value = sum([amountOfSymbols**(-length) for length in codewordsLength])
+    def apply(self, amount_of_symbols, codewords_length):
+        value = sum([amount_of_symbols**(-length) for length in codewords_length])
         return value <= 1
 
-def CalculateAverageCodeLength(probabilities, length):
-    averageCodeLength = 0
+def calculate_average_code_length(probabilities, length):
+    average_code_length = 0
     for i in range(probabilities):
-        averageCodeLength += probabilities[i]*length[i]
+        average_code_length += probabilities[i]*length[i]
     
-    return averageCodeLength
+    return average_code_length
 
-def CalculateCodeEfficiency(probabilities,length, base=2):
-    entropyValue = Entropy().CalculateEntropy(probabilities,base)
-    averageCodeLength = CalculateAverageCodeLength(probabilities, length)
-    return entropyValue/averageCodeLength
+def calculate_code_efficiency(probabilities,length, base=2):
+    entropy_value = Entropy().calculate_entropy(probabilities,base)
+    average_code_length = calculate_average_code_length(probabilities, length)
+    return entropy_value/average_code_length
     
-def CalculateRedundacyOfACode(probabilities,length,base=2):
-    codeEfficiency = CalculateCodeEfficiency(probabilities,length,base)
-    return 1-codeEfficiency
+def calculate_redundacy_of_code(probabilities,length,base=2):
+    code_efficiency = calculate_code_efficiency(probabilities,length,base)
+    return 1-code_efficiency
 

@@ -1,44 +1,43 @@
-#TODO SCRIVERE CODICE
 
 class LZWCoder():
     def __init__(self, alphabet):
-        self.InitCodeBookEncode(alphabet)
-        print(self.codebookEncode)
+        self.init_codebook_encode(alphabet)
+        print(self.codebook_encode)
 
-    def InitCodeBookEncode(self, alphabet):
-        self.codebookEncode = {}
-        self.codebookDecode = {}
+    def init_codebook_encode(self, alphabet):
+        self.codebook_encode = {}
+        self.codebook_decode = {}
         i = 0
         while i < len(alphabet):
-            self.codebookEncode[alphabet[i]] = i+1
-            self.codebookDecode[i+1] = alphabet[i]
+            self.codebook_encode[alphabet[i]] = i+1
+            self.codebook_decode[i+1] = alphabet[i]
             i +=1
     
-    def Encode(self, text):
-        valueToAdd = len(self.codebookEncode)+1
+    def encode(self, text):
+        value_to_add = len(self.codebook_encode)+1
         output = ""
-        indexToAnalize = 0
-        while indexToAnalize < len(text):
-            testToAnalize = text[indexToAnalize:]
+        index_to_analize = 0
+        while index_to_analize < len(text):
+            test_to_analize = text[index_to_analize:]
             
-            codeWord = self.FindCodeword(testToAnalize)
-            if(self.ShouldAddCodeword(testToAnalize, codeWord)):
-                self.AddCodeword(valueToAdd, codeWord, testToAnalize)
+            codeword = self.find_codeword(test_to_analize)
+            if(self.should_add_codeword(test_to_analize, codeword)):
+                self.add_codeword(value_to_add, codeword, test_to_analize)
             
-            indexToAnalize += len(codeWord)
+            index_to_analize += len(codeword)
               
-            output = self.UpdateOutput(codeWord, output)
+            output = self.update_output(codeword, output)
             
-            valueToAdd+=1
+            value_to_add+=1
 
         return output
     
-    def UpdateOutput(self, codeWord, output):
-        return output+str(self.codebookEncode[codeWord])+" "
+    def update_output(self, codeword, output):
+        return output+str(self.codebook_encode[codeword])+" "
     
-    def FindCodeword(self, text):
+    def find_codeword(self, text):
         i = 1
-        while(text and i <= len(text) and text[0:i] in self.codebookEncode):
+        while(text and i <= len(text) and text[0:i] in self.codebook_encode):
             i+=1
         
         if(i != 1):
@@ -46,59 +45,58 @@ class LZWCoder():
             
         return text[0:i]
     
-    def AddCodeword(self,value, prefix,text):
-        codeWordToAdd = text[0:len(prefix)+1]
-        self.codebookEncode[codeWordToAdd] = value
+    def add_codeword(self,value, prefix,text):
+        codeword_to_add = text[0:len(prefix)+1]
+        self.codebook_encode[codeword_to_add] = value
         
-    def ShouldAddCodeword(self, text, prefix):
-        print(text,prefix) 
+    def should_add_codeword(self, text, prefix):
         return len(text)>len(prefix)
     
-    def Decode(self, testToDecode):
-        listToDecode = testToDecode.split()
-        keyToAdd = len(self.codebookDecode)+1
-        valueToAdd = ""
+    def decode(self, test_to_decode):
+        list_to_decode = test_to_decode.split()
+        key_to_add = len(self.codebook_decode)+1
+        value_to_add = ""
         output = ""
         index = 0
-        while index < len(listToDecode):
-            codeToAnalize =  int(listToDecode[index])
+        while index < len(list_to_decode):
+            code_to_analize =  int(list_to_decode[index])
 
-            if(not codeToAnalize in self.codebookDecode):
-                self.AddCodewordNotExisting(index,listToDecode,keyToAdd)
+            if(not code_to_analize in self.codebook_decode):
+                self.add_codeword_not_existing(index,list_to_decode,key_to_add)
 
             
-            output = output + self.codebookDecode[codeToAnalize] 
+            output = output + self.codebook_decode[code_to_analize] 
              
-            if(valueToAdd != ""):
-                self.codebookDecode[keyToAdd]=valueToAdd+self.codebookDecode[codeToAnalize][0]
-                keyToAdd+=1
+            if(value_to_add != ""):
+                self.codebook_decode[key_to_add]=value_to_add+self.codebook_decode[code_to_analize][0]
+                key_to_add+=1
         
-            valueToAdd = self.codebookDecode[codeToAnalize]
+            value_to_add = self.codebook_decode[code_to_analize]
             index+=1
             
         return output
     
-    def AddCodewordNotExisting(self, index, listItem, keyToAdd):
-            previousCodeword = self.codebookDecode[int(listItem[index-1])]
-            self.codebookDecode[keyToAdd]= previousCodeword + previousCodeword[0]
+    def add_codeword_not_existing(self, index, list_item, key_to_add):
+            previous_codeword = self.codebook_decode[int(list_item[index-1])]
+            self.codebook_decode[key_to_add]= previous_codeword + previous_codeword[0]
 
     
     
 
 # coder = LZWCoder(['a','b','c']) 
-# value = coder.Encode('bcababbc')  
+# value = coder.encode('bcababbc')  
 # print(value)
 # print(coder.Decode(value))
 
 # coder = LZWCoder(['A']) 
-# value = coder.Encode('AAAAAA')  
+# value = coder.encode('AAAAAA')  
 # print(value)
 # print(coder.Decode(value))
         
     
-coder = LZWCoder(['N', 'e', 'l', ' ', 'm', 'z', 'o', 'd', 'c', 'a', 'i', 'n', 's', 't', 'r', 'v', 
- 'p', 'u', ',', 'h', 'é', '.', 'A', 'q', 'è', 'g', 'f']
-) 
-value = coder.Encode('Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita. Ahi quanto a dir qual era è cosa dura esta selva selvaggia e aspra e forte.')  
-print(value)
-print(coder.Decode(value))
+# coder = LZWCoder(['N', 'e', 'l', ' ', 'm', 'z', 'o', 'd', 'c', 'a', 'i', 'n', 's', 't', 'r', 'v', 
+#  'p', 'u', ',', 'h', 'é', '.', 'A', 'q', 'è', 'g', 'f']
+# ) 
+# value = coder.encode('Nel mezzo del cammin di nostra vita mi ritrovai per una selva oscura, ché la diritta via era smarrita. Ahi quanto a dir qual era è cosa dura esta selva selvaggia e aspra e forte.')  
+# print(value)
+# print(coder.Decode(value))

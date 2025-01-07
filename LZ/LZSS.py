@@ -10,52 +10,52 @@ class LZSS(LZ77):
             super().__init__()        
             
         def Encode(self, text):
-            self.InitBuffers(text)
-            self.ExecuteEncode()
-            for value in self.encodeText:
+            self.init_buffers(text)
+            self.execute_encode()
+            for value in self.encode_text:
                 print(value.distance, value.value)       
         
-        def ExecuteEncode(self):
-            while(self.lookAheadBuffer):
-                print(self.searchBuffer, "|", self.lookAheadBuffer)
-                prefix = self.FindLongestPrefix()
-                newCodeWord = self.CalculateCodeWord(prefix)
-                self.encodeText.append(newCodeWord)
-                self.UpdateBuffers(prefix.length)
+        def execute_encode(self):
+            while(self.look_ahead_buffer):
+                print(self.search_buffer, "|", self.look_ahead_buffer)
+                prefix = self.find_longest_prefix()
+                new_codeword = self.calculate_codeword(prefix)
+                self.encode_text.append(new_codeword)
+                self.update_buffers(prefix.length)
             
-            print(self.searchBuffer, "|", self.lookAheadBuffer)
+            print(self.search_buffer, "|", self.look_ahead_buffer)
             
-        def UpdateBuffers(self, length):
-            endpoint = 1
+        def update_buffers(self, length):
+            end_point = 1
             if(length != 0):
-                endpoint = length
-            self.UpdateSearchBuffer(endpoint)    
-            self.lookAheadBuffer =  self.lookAheadBuffer[endpoint:]  
+                end_point = length
+            self.update_search_buffer(end_point)    
+            self.look_ahead_buffer =  self.look_ahead_buffer[end_point:]  
         
-        def UpdateSearchBuffer(self, endpoint):   
-            self.searchBuffer =  self.searchBuffer + self.lookAheadBuffer[0:endpoint]
-            lenSearchBuffer = len(self.searchBuffer)
-            if( lenSearchBuffer > self.lengthWindow):
-                self.searchBuffer =   self.searchBuffer[(lenSearchBuffer-self.lengthWindow):lenSearchBuffer]
+        def update_search_buffer(self, end_point):   
+            self.search_buffer =  self.search_buffer + self.look_ahead_buffer[0:end_point]
+            len_search_buffer = len(self.search_buffer)
+            if( len_search_buffer > self.length_window):
+                self.search_buffer =   self.search_buffer[(len_search_buffer-self.length_window):len_search_buffer]
         
-        def CalculateCodeWord(self, prefix):
-            newCodeword = Codeword(0, 0)
+        def calculate_codeword(self, prefix):
+            new_codeword = Codeword(0, 0)
             if(prefix.length == 0):
-                newCodeword.value = self.lookAheadBuffer[0]
+                new_codeword.value = self.look_ahead_buffer[0]
             else:
-                newCodeword.distance = prefix.distance
-                newCodeword.value = prefix.length
+                new_codeword.distance = prefix.distance
+                new_codeword.value = prefix.length
             
-            return newCodeword
+            return new_codeword
         
-        def DecodeCodeWord(self, prefix, text):
+        def decode_codeword(self, prefix, text):
             if(prefix.distance == 0):
                 text = text + prefix.value
             else:
-                lenText = len(text)
-                endIndex = lenText - (prefix.distance-prefix.value)
-                startIndex = endIndex - prefix.value            
-                text = text + text[startIndex:endIndex]
+                len_text = len(text)
+                end_index = len_text - (prefix.distance-prefix.value)
+                start_index = end_index - prefix.value            
+                text = text + text[start_index:end_index]
 
             return text
         

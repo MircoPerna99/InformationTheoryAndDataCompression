@@ -1,13 +1,13 @@
 class UnaryCoder():
-    def Encode(self, value):
-        valueToReturn = '1'
+    def encode(self, value):
+        value_encode = '1'
         for i in range(value):
-            valueToReturn = '0'+valueToReturn
+            value_encode = '0'+value_encode
         
-        return valueToReturn
+        return value_encode
     
-    def Decode(self, value):
-        valueToReturn = 0
-        while(value[valueToReturn] != '1'):
-            valueToReturn+=1
-        return valueToReturn
+    def decode(self, value):
+        value_decoded = 0
+        while(value[value_decoded] != '1'):
+            value_decoded+=1
+        return value_decoded
