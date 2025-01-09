@@ -1,78 +1,92 @@
 import re
+class Pair():
+    def __init__(self):
+        self.frequency = 0
+        self.pair = ''
+
 class RePairCreator():
     def __init__(self):
         self.grammar={}
         self.index_value = 1
+        self.array_chars = []
         
     def apply(self, text, is_chomsky_normal_form = True):
+        self.array_chars = self.from_text_to_array(text)
+
         if(is_chomsky_normal_form):
-            text =self.init_chomsky_normal_form(text)
-                             
-        print(text)
-        pairs = self.define_pairs(text)
-        pair_to_remove = self.max_occurences_pair(pairs)
-        while(pairs.count(pair_to_remove) >1):
-            #print(pair_to_remove)
-            new_symbol_to_add = self.define_left_symbol_from_char(self.index_value)
-            self.index_value +=1
-            self.grammar[pair_to_remove] = new_symbol_to_add
-            text = text.replace(pair_to_remove,new_symbol_to_add)
-            #print(text)
-            pairs = self.define_pairs(text)
-            pair_to_remove = self.max_occurences_pair(pairs)
+            text =self.init_chomsky_normal_form()
+            
+        pair_to_remove = Pair()        
+        pair_to_remove = self.get_most_common_pair()
         
-        self.grammar[text] = 'S'
-        self.print_grammar()
+        while(pair_to_remove.frequency > 1):
+            self.add_rule(pair_to_remove.pair)
+            self.replace_pair(pair_to_remove.pair)
+            pair_to_remove = self.get_most_common_pair()
+                    
+        final_right_rule = self.from_array_to_text()
+        self.grammar[final_right_rule] = 'S'
+    
+    def replace_pair(self, pair_to_remove):
+            new_array = []
+            i = 0
+            while(i+1 < len(self.array_chars)):
+                pair = self.array_chars[i]+self.array_chars[i+1]
+                if(pair_to_remove != pair):
+                    new_array.append(self.array_chars[i])
+                else:
+                    new_array.append( self.grammar[pair_to_remove])
+                    i+=1
+
+                i+=1
+                
+            self.array_chars = new_array
+    
+    def from_array_to_text(self):
+        return ''.join(self.array_chars)
+        
+    def  from_text_to_array(self, text):
+            return list(text)
         
     def print_grammar(self):
         for key in self.grammar.keys():
-            print(self.grammar[key],'->',key)
-        
-    def max_occurences_pair(self, pairs):
-        pair_to_return = pairs[0]
-        pair_to_return_occurences = pairs.count(pairs[0])
-        for i in range(1,len(pairs)):
-            occurences_new_pair = pairs.count(pairs[i])
-            if(occurences_new_pair > pair_to_return_occurences):
-                pair_to_return = pairs[i]
-                pair_to_return_occurences = occurences_new_pair
-        
+            print(self.grammar[key],'->',key)      
+     
+    def get_most_common_pair(self):
+        pairs = {}
+        pair_to_return = Pair()
+        i = 0
+        while(i+1 < len(self.array_chars)):
+            pair = self.array_chars[i]+self.array_chars[i+1]
+            if( pair in pairs):
+                pairs[pair] +=1
+            else:
+                pairs[pair] = 1
+
+            if(pairs[pair]  > pair_to_return.frequency):
+                pair_to_return.frequency = pairs[pair]
+                pair_to_return.pair = pair
+            
+            i+=1
+
         return pair_to_return
     
-    def init_chomsky_normal_form(self, text):
-        self.init_dictionary_grammar(text)
-        for key in self.grammar:
-            text = text.replace(key,self.grammar[key])
-        return text
+    def init_chomsky_normal_form(self):
+            self.init_dictionary_grammar()
+            for i in range(len(self.array_chars)):
+                self.array_chars[i] = self.grammar[self.array_chars[i]]
     
-    def define_pairs(self, text):
-        list_char = re.findall(r'X\d|.', text)
-        list_to_return = []
-        last_pair = ''
-        i = 0
-        while(i+1 < len(list_char)):
-            pair = list_char[i]+list_char[i+1]
-            if(last_pair != pair):
-                list_to_return.append(pair)
-                last_pair = pair
-            i+=1
-            
-        return list_to_return
-    
-    def init_dictionary_grammar(self, text):
-        for char in text:
-            if(not char in self.grammar):
-                value_to_add = self.define_left_symbol_from_char(self.index_value)
-                self.grammar[char] = value_to_add
-                self.index_value+=1
-                
-        print(self.grammar)    
+    def init_dictionary_grammar(self):
+            for char in self.array_chars:
+                if(not char in self.grammar):
+                    self.add_rule(char) 
 
+    def add_rule(self, rightValue):
+            leftValue = self.define_left_symbol_from_char()
+            self.grammar[rightValue] = leftValue
         
-    def define_left_symbol_from_char(self, index, char = 'X'):
-        return char+str(index)
-            
-             
-
-RePairCreator().apply('aaabcaabaaabcabdabd')  
-RePairCreator().apply('aaabcaabaaabcabdabd', False)  
+    def define_left_symbol_from_char(self, char = 'X'):
+            new_symbol = char+str(self.index_value)
+            self.index_value +=1
+            return new_symbol
+       
