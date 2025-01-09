@@ -24,7 +24,7 @@ reversed = repair_creator.reverse()
 
 
 analyzer = CFAnalyzer()
-for i in range(25):
+for i in range(20):
     TM_word = ThueMorseWord().get_TM_word(i)
     repair_creator =  RePairCreator()
     repair_creator.apply(TM_word)
