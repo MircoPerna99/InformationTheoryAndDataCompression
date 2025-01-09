@@ -7,7 +7,7 @@ class Pair():
 class RePairCreator():
     def __init__(self):
         self.grammar={}
-        self.index_value = 1
+        self.index_value = 0
         self.array_chars = []
         
     def apply(self, text, is_chomsky_normal_form = True):
@@ -21,9 +21,9 @@ class RePairCreator():
         
         while(pair_to_remove.frequency > 1):
             self.add_rule(pair_to_remove.pair)
-            self.replace_pair(pair_to_remove.pair)
+            self.replace_pair(pair_to_remove.pair)      
             pair_to_remove = self.get_most_common_pair()
-                    
+              
         final_right_rule = self.from_array_to_text()
         self.grammar[final_right_rule] = 'S'
     
@@ -40,6 +40,9 @@ class RePairCreator():
 
                 i+=1
                 
+            if(i == len(self.array_chars)-1):
+                new_array.append(self.array_chars[i])
+                    
             self.array_chars = new_array
     
     def from_array_to_text(self):
@@ -81,12 +84,21 @@ class RePairCreator():
                 if(not char in self.grammar):
                     self.add_rule(char) 
 
-    def add_rule(self, rightValue):
-            leftValue = self.define_left_symbol_from_char()
-            self.grammar[rightValue] = leftValue
+    def add_rule(self, right_value):
+            left_value = self.define_left_symbol_from_char()
+            self.grammar[right_value] = left_value
         
     def define_left_symbol_from_char(self, char = 'X'):
             new_symbol = char+str(self.index_value)
             self.index_value +=1
             return new_symbol
-       
+        
+    def reverse(self):
+        output = ""
+        for key in reversed(self.grammar.keys()):
+            if(output == ""):
+                output += str(key)
+            else:
+                output = output.replace(self.grammar[key], key)
+        
+        return output
