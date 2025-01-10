@@ -11,7 +11,7 @@ def take_order():
 
 
 order = take_order()
-TM_word = ThueMorseWord().get_TM_word(order)
+TM_word = ThueMorseWord().get_TM_word_recursive(order)
 print(f"The Thue-Morse word of order {order} is : {TM_word}")
 
 repair_creator =  RePairCreator()
@@ -20,11 +20,10 @@ repair_creator.apply(TM_word)
 print(f"This is the CNF grammar for the Thue-Morse word of order {order} using Re-Pair in Chomsky normal form: ")
 repair_creator.print_grammar()
 
-
 print("The analysis of the first twenty Thue-Morse words")  
 analyzer = CFAnalyzer()
 for i in range(20):
-    TM_word = ThueMorseWord().get_TM_word(i)
+    TM_word = ThueMorseWord().get_TM_word_recursive(i)
     repair_creator =  RePairCreator()
     repair_creator.apply(TM_word)
     analyzer.add_grammar(repair_creator.grammar)

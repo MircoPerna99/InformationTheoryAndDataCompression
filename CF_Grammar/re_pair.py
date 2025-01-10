@@ -10,6 +10,25 @@ class RePairCreator():
         self.index_value = 0
         self.array_chars = []
         
+    def set_index_value(self, value):
+        self.index_value = value
+        
+    def apply_for_thue_morse_word(self, text):
+        lista = text.split("X")[1:]
+        self.array_chars  = [f"X{item}" for item in lista] 
+            
+        pair_to_remove = Pair()        
+        pair_to_remove = self.get_most_common_pair()
+        
+        while(pair_to_remove.frequency > 1):
+            self.add_rule(pair_to_remove.pair)
+            self.replace_pair(pair_to_remove.pair)      
+            pair_to_remove = self.get_most_common_pair()
+              
+        final_right_rule = self.from_array_to_text()
+        self.grammar[final_right_rule] = 'S'
+    
+        
     def apply(self, text, is_chomsky_normal_form = True):
         self.array_chars = self.from_text_to_array(text)
 
