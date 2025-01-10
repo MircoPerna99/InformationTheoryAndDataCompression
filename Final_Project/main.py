@@ -20,9 +20,8 @@ repair_creator.apply(TM_word)
 print(f"This is the CNF grammar for the Thue-Morse word of order {order} using Re-Pair in Chomsky normal form: ")
 repair_creator.print_grammar()
 
-reversed = repair_creator.reverse()
 
-
+print("The analysis of the first twenty Thue-Morse words")  
 analyzer = CFAnalyzer()
 for i in range(20):
     TM_word = ThueMorseWord().get_TM_word(i)
@@ -30,7 +29,7 @@ for i in range(20):
     repair_creator.apply(TM_word)
     analyzer.add_grammar(repair_creator.grammar)
  
-print(f"The size of  grammar of the top twenty Thue-Morde words are {analyzer.sizes}")   
+print(f"The size of  grammar of the first twenty Thue-Morse words are {analyzer.sizes}")   
 print(f"The average discrepancy between the grammar size is {analyzer.calculate_average_discrepancy()}")
 
 
