@@ -4,7 +4,7 @@ from Final_Project.CNF_analyzer import *
 
 def apply_grammar(grammar, text):
     for key in grammar.keys():
-        if(grammar[key] != 'S'):
+        if(grammar[key] != 'S' and grammar[key] != 'a' and  grammar[key] != 'b' ):
             text = text.replace(key, grammar[key])
     
     return text
@@ -26,7 +26,7 @@ def get_CF_grammar(order):
     else:
         grammar = get_CF_grammar(order-2)
         grammar.popitem()
-        TM_word = apply_grammar(grammar,  ThueMorseWord().get_TM_word_recursive(order))
+        TM_word = apply_grammar(grammar,  ThueMorseWord().get_TM_word_recursive_with_grammar(order))
         return get_new_grammar(TM_word, grammar)
         
 def print_grammar(grammar):

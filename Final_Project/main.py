@@ -10,8 +10,8 @@ def take_order():
         print("Invalid input. Please enter an integer.")
 
 order = take_order()
-TM_word = ThueMorseWord().get_TM_word_recursive(order)
-print(f"The Thue-Morse word of order {order} is : {TM_word}")
+# TM_word = ThueMorseWord().get_TM_word_recursive(order)
+# print(f"The Thue-Morse word of order {order} is : {TM_word}")
 
 
 print(f"This is the CNF grammar for the Thue-Morse word of order {order} using Re-Pair in Chomsky normal form: ")
@@ -20,7 +20,7 @@ print_grammar(grammar)
 
 print("The analysis of the first twenty Thue-Morse words")  
 analyzer = CFAnalyzer()
-for i in range(30):
+for i in range(20):
     grammar = get_CF_grammar(i)
     analyzer.add_grammar(grammar)
  
