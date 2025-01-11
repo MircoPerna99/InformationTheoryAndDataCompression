@@ -13,7 +13,7 @@ class CFAnalyzer():
         def calculate_size_grammar(self,grammar):
             size_grammar = 0
             for right_value in grammar:
-                size_grammar += sum(1 for char in right_value if char.isalpha() and grammar[right_value] != 'S' )
+                size_grammar += sum(1 for char in right_value if char.isalpha())
                 
             return size_grammar
         
