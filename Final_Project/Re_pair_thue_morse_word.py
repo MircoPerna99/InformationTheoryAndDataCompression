@@ -33,3 +33,14 @@ def print_grammar(grammar):
     for key in grammar.keys():
         print(grammar[key],'->',key)   
         
+
+def reverse(grammar):
+        output = ""
+        for key in reversed(grammar.keys()):
+            if(output == ""):
+                output += str(key)
+            else:
+                    output = output.replace(grammar[key], key)
+        
+        return output
+        
